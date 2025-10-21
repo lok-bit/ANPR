@@ -16,7 +16,7 @@ This repository contains the **second stage** of a two-part License Plate Recogn
 1. **Plate ROI Detection (Haar cascade)** – use `haar_carplate.xml` to crop the plate region.
 2. **Preprocessing** – grayscale → denoise → adaptive threshold → morphology.
 3. **Character Segmentation** – contour filtering, geometric checks, left-to-right sorting, ROI normalization (e.g., 28×28).
-4. **CNN Training** – train a small CNN for alphanumeric (0–9, A–Z).
+4. **CNN Training** – train a small CNN for alphanumeric (0–9, A–Z, excluding I/O if desired).
 5. **Inference** – predict characters and assemble the final plate string.
 6. **Batch Inference** – run over a folder and print results to the console.
 
@@ -26,7 +26,7 @@ This repository contains the **second stage** of a two-part License Plate Recogn
 
 * **Preprocessing:** grayscale → Gaussian blur → adaptive threshold → morphology (open/close).
 * **Segmentation:** contour filtering by aspect ratio/area/height; sort left→right.
-* **CNN (reference):** `Conv-BN-ReLU`×2 → MaxPool → Dropout → Dense → Softmax (36 classes).
+* **CNN :** `Conv2D(20,5×5)+ReLU` → `MaxPool(2×2)` → `Conv2D(50,5×5)+ReLU` → `MaxPool(2×2)` → `Flatten` → `Dense(500)+ReLU` → `Dense(34)+Softmax`.
 * **Evaluation:** character accuracy, confusion matrix, and per-plate exact match rate.
 * **Locale:** alphanumeric plates by default—extend label set as needed.
 
