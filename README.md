@@ -4,7 +4,7 @@
 
 This repository contains the **second stage** of a two-part License Plate Recognition (LPR) system:
 
-* **Part 1 (not in this repo):** License plate detection using a Haar cascade to localize the plate region and export `haar_carplate.xml`.
+* **Part 1 (not in this repo):** License plate detection using a Haar cascade to localize the plate region and export `haar_carplate.xml`.[→ Go to Part 2: Character Segmentation & CNN](https://github.com/lok-bit/haar-training-tool)
 * **Part 2 (this repo):** From a cropped plate image to **character segmentation**, **CNN-based character recognition**, and **batch processing** for multiple images.
 
 > This repo assumes you already have `haar_carplate.xml` from Part 1.
