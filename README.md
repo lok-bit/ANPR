@@ -30,6 +30,27 @@ This repository contains the **second stage** of a two-part License Plate Recogn
 * **Evaluation:** character accuracy, confusion matrix, and per-plate exact match rate.
 * **Locale:** alphanumeric plates by default—extend label set as needed.
 
+## Dataset & Labels
+
+* **Classes:** 34 (digits 0–9, letters A–Z **excluding I and O**). :contentReference[oaicite:9]{index=9}
+* **Character crops:** normalized to **18×38**; for very narrow glyphs (e.g., **'1'**) we pad left/right with white margins to avoid shape distortion after resizing. :contentReference[oaicite:10]{index=10}
+* **Augmentation:** per-class images expanded to ~**500** by adding **random noise dots** to simulate dirt/imperfections on plates. :contentReference[oaicite:11]{index=11} :contentReference[oaicite:12]{index=12}
+
+## Implementation Details
+
+* **Preprocessing:** grayscale → denoise → adaptive threshold → morphology (open/close).  
+* **Segmentation:** contour detection → bounding rect → geometric filtering (aspect/area/height) → left-to-right sorting → resize to 18×38. :contentReference[oaicite:13]{index=13}
+* **CNN Training:** train/val split **80%/20%**, **batch=32**, **epochs=10** (small CNN for 34-way classification). :contentReference[oaicite:14]{index=14}
+
+## Evaluation & Known Limitations
+
+* In a small test set, **five sample images were all recognized**; however, with two **real-world** photos, letters **'N'** and **'R'** were misclassified. Root cause: the **plate was tilted**, and the upstream Haar-based crop did **not fully capture** the plate region before segmentation. :contentReference[oaicite:15]{index=15}
+
+## Troubleshooting Notes
+
+* If segmentation misses characters, tune contour **aspect/area thresholds** and visualize with `cv2.rectangle()` to iterate quickly. :contentReference[oaicite:16]{index=16}
+* For the upstream detector, increasing **`minNeighbors` to 5** improved stability (fewer false boxes / missing plates in our tests). :contentReference[oaicite:17]{index=17}
+
 ---
 
 ## Acknowledgements
